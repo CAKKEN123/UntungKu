@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#146c43" />
+    <title>UntungKu - Kalkulator HPP UMKM</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <main class="app-shell">
+      <header class="hero">
+        <div class="brand-mark" aria-hidden="true">Rp</div>
+        <div>
+          <p class="eyebrow">CATAT BIAYA DENGAN MUDAH</p>
+          <h1>UntungKu</h1>
+          <p class="hero-copy">Hitung modal, HPP, dan keuntungan produkmu.</p>
+        </div>
+      </header>
+
+      <section class="summary" aria-label="Ringkasan keuntungan">
+        <div class="summary-item">
+          <span>HPP per porsi</span>
+          <strong id="summaryHpp">Rp0</strong>
+        </div>
+        <div class="summary-item">
+          <span>Laba per porsi</span>
+          <strong id="summaryProfit">Rp0</strong>
+        </div>
+        <div class="summary-item">
+          <span>Margin</span>
+          <strong id="summaryMargin">0%</strong>
+        </div>
+      </section>
+
+      <nav class="tabs" aria-label="Menu utama">
+        <button class="tab active" data-panel="materials" type="button">Bahan</button>
+        <button class="tab" data-panel="product" type="button">Produk</button>
+        <button class="tab" data-panel="result" type="button">Hasil</button>
+      </nav>
+
+      <section class="panel active" id="materials">
+        <div class="section-heading">
+          <div>
+            <h2>Daftar bahan</h2>
+            <p>Masukkan harga beli bahan yang kamu gunakan.</p>
+          </div>
+        </div>
+
+        <form id="materialForm" class="form-card">
+          <label>
+            Nama bahan
+            <input id="materialName" type="text" placeholder="Contoh: Tepung terigu" required />
+          </label>
+          <div class="form-grid">
+            <label>
+              Harga beli
+              <input id="materialPrice" type="number" min="1" inputmode="numeric" placeholder="12000" required />
+            </label>
+            <label>
+              Jumlah beli
+              <input id="materialQuantity" type="number" min="0.01" step="0.01" inputmode="decimal" placeholder="1000" required />
+            </label>
+          </div>
+          <label>
+            Satuan beli
+            <select id="materialUnit">
+              <option value="gram">gram</option>
+              <option value="ml">ml</option>
+              <option value="pcs">pcs</option>
+              <option value="kg">kg</option>
+              <option value="liter">liter</option>
+            </select>
+          </label>
+          <button class="button button-primary" type="submit">+ Tambah bahan</button>
+        </form>
+
+        <div id="materialList" class="material-list" aria-live="polite"></div>
+      </section>
+
+      <section class="panel" id="product">
+        <div class="section-heading">
+          <div>
+            <h2>Hitung produk</h2>
+            <p>Pilih bahan dan isi jumlah yang dipakai untuk satu kali produksi.</p>
+          </div>
+        </div>
+
+        <form id="productForm" class="form-card">
+          <label>
+            Nama produk
+            <input id="productName" type="text" placeholder="Contoh: Donat gula" />
+          </label>
+          <div class="form-grid">
+            <label>
+              Hasil produksi
+              <input id="portionCount" type="number" min="1" inputmode="numeric" placeholder="10" />
+            </label>
+            <label>
+              Harga jual per porsi
+              <input id="sellingPrice" type="number" min="0" inputmode="numeric" placeholder="5000" />
+            </label>
+          </div>
+          <label>
+            Biaya kemasan satu batch
+            <input id="packagingCost" type="number" min="0" inputmode="numeric" value="0" />
+          </label>
+          <label>
+            Biaya lain satu batch
+            <input id="otherCost" type="number" min="0" inputmode="numeric" value="0" />
+          </label>
+        </form>
+
+        <div class="recipe-heading">
+          <h3>Bahan dalam produk</h3>
+          <p>Pilih bahan yang dipakai dan jumlahnya.</p>
+        </div>
+        <div id="recipeList" class="recipe-list"></div>
+        <button id="calculateButton" class="button button-primary button-wide" type="button">Hitung keuntungan</button>
+      </section>
+
+      <section class="panel" id="result">
+        <div class="section-heading">
+          <div>
+            <h2>Hasil perhitungan</h2>
+            <p id="resultProductName">Isi data produk terlebih dahulu.</p>
+          </div>
+        </div>
+        <div class="result-card">
+          <div class="result-row"><span>Total biaya bahan</span><strong id="materialTotal">Rp0</strong></div>
+          <div class="result-row"><span>Biaya kemasan dan lain-lain</span><strong id="extraTotal">Rp0</strong></div>
+          <div class="result-row total"><span>Modal satu batch</span><strong id="batchTotal">Rp0</strong></div>
+          <div class="divider"></div>
+          <div class="result-row"><span>HPP per porsi</span><strong id="hppResult">Rp0</strong></div>
+          <div class="result-row"><span>Harga jual per porsi</span><strong id="sellingResult">Rp0</strong></div>
+          <div class="result-row profit"><span>Laba per porsi</span><strong id="profitResult">Rp0</strong></div>
+          <div class="result-row profit"><span>Margin laba</span><strong id="marginResult">0%</strong></div>
+        </div>
+        <p id="resultMessage" class="result-message">Belum ada perhitungan.</p>
+        <div class="action-grid">
+          <button id="saveProductButton" class="button button-primary" type="button">Simpan produk</button>
+          <button id="resetButton" class="button button-outline" type="button">Mulai ulang</button>
+        </div>
+        <div class="saved-products">
+          <h3>Produk tersimpan</h3>
+          <div id="savedProductList"></div>
+        </div>
+      </section>
+
+      
+    </main>
+    <div id="toast" class="toast" role="status" aria-live="polite"></div>
+    <script src="script.js"></script>
+  </body>
+</html>
